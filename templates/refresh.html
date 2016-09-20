@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Refresh {% endblock %}
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        {% if result == 0 %}
+            <h5>Succeed to refresh account {{ username }}.</h5>
+            <p>You can check your refreshed account via the <a href="http://access.stage.redhat.com">stage Customer Portal</a>.</p>
+        {% endif %}
+        {% if result == 1 %}
+            <h5><font color="red">Failed to refresh account {{ username }} - This account doesn't exist.</font></h5>
+        {% endif %}
+        {% if result == 2 %}
+            <h5><font color="red">Failed to refresh account {{ username }} - Incorrect username or password.</font></h5>
+        {% endif %}
+        {% if result == 3 %}
+            <h5><font color="red">Failed to refresh account {{ username }}.</font></h5>
+        {% endif %}
+        {% if result == 5 %}
+            <h5><font color="red">Failed to refresh account {{ username }}.</font></h5>
+            <h5>No response from server, please try again, sorry for the inconvenience! </h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Entitle Entitlements{% endblock %}
+
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        {% if result == 0 %}
+            <h5>Finished to add SKU(s): {{ sku }} into account {{ username }}.</h5>
+            {% if sku_pass != "" %}
+                <p><b>Succeed</b> to add SKU(s): {{ sku_pass }}</p>
+            {% endif %}
+            {% if sku_fail != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_fail }}</font></p>
+                <p>For SKU related failures, consider opening a ticket with product-request@redhat.com</p>
+                <p>For Stage Candlepin Server failures, consider opening a ticket with servicedesk@redhat.com</p>
+                <p>For failures with this tool, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_con_fail != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_con_fail }}</font></p>
+                <p><font color="red">Failed to connect Stage Candlepin - ('Connection aborted.', error(104, 'Connection reset by peer'))</font></p>
+                <p>For SKU related failures, consider opening a ticket with product-request@redhat.com</p>
+                <p>For Stage Candlepin Server failures, consider opening a ticket with servicedesk@redhat.com</p>
+                <p>For failures with this tool, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_inactive != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_inactive }}</font></p>
+                <p>Reg number product not active for these SKUs, you can re-check it by yourselves via <a href="https://webadmin.corp.redhat.com/wapps/product-admin/">product-admin</a> web page.</p>
+                <p>For this inactive issue, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_not_exist != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s) {{ sku_not_exist }}.</font> &nbsp;&nbsp; - &nbsp;&nbsp; Failed to get them in our current Database, you can try to find other suitable
+                    SKUs via <a href={{ host }}#search>Search Subscription SKUs</a> tab.</p>
+                <p>If you want to add some other SKUs into our current Database, please follow <a href="https://mojo.redhat.com/docs/DOC-164901">Doc-164901</a>.</p>
+            {% endif %}
+            <p>You can test your newly entitled Subscription(s) via the <a href="http://access.stage.redhat.com">stage
+                Customer Portal</a>, or check your newly add SKUs via <a href={{ host }}#view>View Accounts</a> tab.</p>
+        {% endif %}
+        {% if result == 2%}
+            <h5><font color="red"><b>Failed</b> to entitle Subscription(s) {{ sku }} into account {{ username }} - Incorrect username or password.</font></h5>
+        {% endif %}
+        {% if result == 3%}
+            <h5>Finished to add SKU(s): {{ sku }} into account {{ username }}.</h5>
+            <h5>But, failed to refresh it, maybe there will be something wrong with this account.</h5>
+            {% if sku_pass != "" %}
+                <p><b>Succeed</b> to add SKU(s): {{ sku_pass }}</p>
+            {% endif %}
+            {% if sku_fail != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_fail }}</font></p>
+                <p>For SKU related failures, consider opening a ticket with product-request@redhat.com</p>
+                <p>For Stage Candlepin Server failures, consider opening a ticket with servicedesk@redhat.com</p>
+                <p>For failures with this tool, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_con_fail != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_con_fail }}</font></p>
+                <p><font color="red">Failed to connect Stage Candlepin - ('Connection aborted.', error(104, 'Connection reset by peer'))</font></p>
+                <p>For SKU related failures, consider opening a ticket with product-request@redhat.com</p>
+                <p>For Stage Candlepin Server failures, consider opening a ticket with servicedesk@redhat.com</p>
+                <p>For failures with this tool, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_inactive != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s): {{ sku_inactive }}</font></p>
+                <p>Reg number product not active for these SKUs, you can re-check it by yourselves via <a href="https://webadmin.corp.redhat.com/wapps/product-admin/">product-admin</a> web page.</p>
+                <p>For this inactive issue, please <a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">open a ticket</a> to us, thanks!</p>
+            {% endif %}
+            {% if sku_not_exist != "" %}
+                <p><font color="red"><b>Failed</b> to add SKU(s) {{ sku_not_exist }} </font> &nbsp;&nbsp; - &nbsp;&nbsp; Failed to get them in our current Database, you can try to find other suitable
+                    SKUs via <a href={{ host }}#search>Search Subscription SKUs</a> tab.</p>
+                <p>If you want to add some other SKUs into our current Database, please follow <a href="https://mojo.redhat.com/docs/DOC-164901">Doc-164901</a>.</p>
+            {% endif %}
+            <p>You can test your newly entitled Subscription(s) via the <a href="http://access.stage.redhat.com">stage
+                Customer Portal</a>, or check your newly add SKUs via <a href={{ host }}#view>View Accounts</a> tab.</p>
+        {% endif %}
+        {% if result == 5 %}
+            <h5><font color="red"><b>Failed</b> to add skus {{ skus }} into account {{ username }}.</font></h5>
+            <h5>No response from server, please try again, sorry for the inconvenience! </h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Create Entitlements{% endblock %}
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        <p><span style="font-size:20px;">Search results for <span style="font-style:italic;">{{ data }}</span></span>  (<font color="#00CC00">NOTE</font>: These datas are all from Stage Candlepin, not Production Candlepin.)</p>
+        <hr>
+        <p><span style="font-size:15px;color:red">ERROR</span>: The SKU(s) {{ sku_failed_matrix }} was/were not found among the SKU test request database. The SKU(s) may still be valid, but is/are not known to this tool at this time.</p>
+    </div>
+</div>
+{% endblock %}
+

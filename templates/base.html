@@ -1,0 +1,122 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+<title>Account Tool for Stage Candlepin</title>
+<style>
+    body { padding: 0 !important; margin: 0 auto auto; width: 100%; }
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{{ bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap') }}" rel="stylesheet" media="screen">
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen, print">
+<link href="{{ url_for('static', filename='css/rcue.css') }}" rel="stylesheet" media="screen, print">
+<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block content %}
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+</div>
+{% endfor %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Nav tabs -->
+<div class="container">
+    <div class="navbar primary">
+        <div class="navbar-inner">
+            <ul id="myTab" class="nav nav-tabs nav-tabs-sticky" role="tablist">
+                <li class="active"><a href="#create" data-toggle="tab">Create Accounts</a></li>
+                <li ><a href="#entitle" data-toggle="tab">Add Subscription Pools</a></li>
+                <li ><a href="#csv" data-toggle="tab">Create Accounts from CSV</a></li>
+                <li class="dropdown">
+                    <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown"> Search Subscription SKUs <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+                        <li><a href="#searchByPHProductLine" tabindex="-1" data-toggle="tab">Search by Product Hierarchy: Product Line</a></li>
+                        <li><a href="#searchByPHProductName" tabindex="-1" data-toggle="tab">Search by Product Hierarchy: Product Name</a></li>
+                        <li><a href="#searchBySKUName" tabindex="-1" data-toggle="tab">Search by SKU Name</a></li>
+                        <li><a href="#AdvancedSearch" tabindex="-1" data-toggle="tab">Advanced Search</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" id="myTabDrop3" class="dropdown-toggle" data-toggle="dropdown"> Manage Accounts <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop2">
+                        <!--li><a href="#delete" tabindex="-1" data-toggle="tab">Delete Pools</a></li-->
+                        <li><a href="#view" tabindex="-1" data-toggle="tab">View Accounts</a></li>
+                        <li><a href="#export" tabindex="-1" data-toggle="tab">Export Accounts</a></li>
+                        <li><a href="#refresh" tabindex="-1" data-toggle="tab">Refresh Subscription Pools</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" id="myTabDrop4" class="dropdown-toggle" data-toggle="dropdown"> Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop3">
+                        <li><a href="#doc" tabindex="-1" data-toggle="tab">Online Doc</a></li>
+                        <li><a href="#issues" tabindex="-1" data-toggle="tab">Report an Issue</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Tab panes -->
+    <div id="myTabContent" class="tab-content">
+        <div class="tab-pane active" id="create">
+            {% block create_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="entitle">
+            {% block entitle_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="csv">
+            {% block csv_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="searchByPHProductLine">
+            {% block search_ph_product_line_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="searchByPHProductName">
+            {% block search_ph_product_name_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="searchBySKUName">
+            {% block search_sku_name_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="AdvancedSearch">
+            {% block advanced_search_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="refresh">
+            {% block refresh_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="delete">
+            {% block delete_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="view">
+            {% block view_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="export">
+            {% block export_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="doc">
+            {% block doc_content %}{% endblock %}
+        </div>
+        <div class="tab-pane" id="issues">
+            {% block issues_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type=text/javascript src="http://code.jquery.com/jquery.js"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/jquery.stickytabs.js') }}"></script>
+<script>
+$(function() {
+    $('.nav-tabs-sticky').stickyTabs();
+});
+</script>
+{% endblock %}

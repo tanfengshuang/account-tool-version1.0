@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Entitle/Create from CSV file {% endblock %}
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        {% if result == 0 %}
+            <h5>Finished to entitle/create Subscription(s) from file {{ file }}.</h5>
+            <p>You can test your newly entitled Subscription(s) via <a href="http://access.stage.redhat.com">the stage
+                Customer Portal</a>,  or check your newly added SKUs via <a href={{ host }}#view>View Accounts</a> tab.</p>
+            <p>If failed to 'Accept Terms and Conditions' when you register with the newly created account(s), you can accept terms again via the <a href={{ host }}#refresh>Refresh Subscription Pools</a>Tab.</p>
+            {% if summary != "" %}
+                <p><b>Summary:</b></p>
+                {% for tr in summary_list %}
+                    <p>{{ tr["user_info"] }}:</p>
+                    {% if tr["fail"] != "" %}
+                        <p><font color="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ tr["fail"] }}</font></p>
+                    {% endif %}
+                    {% if tr["pass"] != "" %}
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ tr["pass"] }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+        {% if result == 3 %}
+            <h5>Finished to entitle/create Subscription(s) from file {{ file }}.</h5>
+            <h5>But, failed to refresh account: {{ failed_refresh }}, maybe there will be something wrong with them.</h5>
+            <p>You can test your newly entitled Subscription(s) via <a href="http://access.stage.redhat.com">the stage
+                Customer Portal</a>,  or check your newly added SKUs via <a href={{ host }}#view>View Accounts</a> tab.</p>
+            {% if summary != "" %}
+                <p><b>Summary:</b></p>
+                {% for tr in summary_list %}
+                    <p>{{ tr["user_info"] }}:</p>
+                    {% if tr["fail"] != "" %}
+                        <p><font color="red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ tr["fail"] }}</font></p>
+                    {% endif %}
+                    {% if tr["pass"] != "" %}
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ tr["pass"] }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Entitle Entitlements{% endblock %}
+
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        <h5>View Results:</h5>
+        {% if quantity_mark == True %}
+            <h6><font color="#00CC00"><b>NOTE:</b></font></h6>
+            <h6>&nbsp;&nbsp;All products with Unlimited Product of 'True' will create unlimited quantity subscriptions.
+                For entitlement purposes the subscription and pool quantity for those products is unlimited.</h6>
+            <h6>&nbsp;&nbsp;For SKU(s) {{ quantity_unlimited }} return 10000 instead of -1(unlimited) here, as this tool
+                cannot handle quantity -1 in <a href={{ host }}#create>Create</a> Tab. </h6>
+        {% endif %}
+        <hr>
+        <p>{{ info }}</p>
+    </div>
+</div>
+{% endblock %}

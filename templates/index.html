@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}SKU Accounts{% endblock %}
+
+{% block create_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp;You can create your account in Stage Candlepin (subscription.rhn.stage.redhat.com) on this tab.
+        It's optional to entitle the account with Subscription SKUs and Quantity which can be added after account
+        creation on <a href={{ host }}#entitle>Entitle the account</a> tab.
+        You can test your account via the
+        <a href="http://access.stage.redhat.com">Stage Customer Portal</a>.</p>
+    <p>&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: You can check your account before creation via <a href={{ host }}#view>View Accounts</a> tab.</p>
+    <hr>
+    {{ wtf.quick_form(create_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block entitle_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp;You can populate your account on this tab by adding pools of subscriptions. These pools will appear
+        in the list of all available subscriptions to systems that have registered to this account.</p>
+    <p>&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: You can check your account before creation via <a href={{ host }}#view>View Accounts</a> tab.</p>
+    <hr>
+    {{ wtf.quick_form(entitle_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block csv_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp;You can create and entitle your accounts from the uploaded csv file on this tab. And it will take tons of time if you have a lot of accounts to be created, please give some time for this operation, thank you! </p>
+    <hr>
+    {{ wtf.quick_form(csv_form, form_type="horizontal", horizontal_columns=('lg', 2, 5), enctype="multipart/form-data") }}
+</div>
+{% endblock %}
+
+{% block refresh_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp;You can refresh the Subscriptions of your account on this tab.</p>
+    <hr>
+{{ wtf.quick_form(refresh_form, form_type="horizontal", horizontal_columns=('lg', 2, 5)) }}
+</div>
+{% endblock %}
+
+{% block delete_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp;You can Delete your specified Subscriptions Pools on this tab.</p>
+    <hr>
+{{ wtf.quick_form(delete_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block view_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; You can view your account in CSV format on this tab, please input the username and password. </p>
+    <hr>
+    {{ wtf.quick_form(view_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block export_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; You can export your accounts on this tab.</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Supported Browsers</b>: Firefox(20+), Chrome, IE(10+), Opera(15+)</p>
+    <hr>
+    {{ wtf.quick_form(export_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block search_ph_product_line_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; Please select the Product Hierarchy: Product Line, and click 'Search' button, then the 'SKU' column is just the
+        corresponding Subscription SKUs.</p>
+    <p>&nbsp;&nbsp; <font color="#00CC00">NOTE</font>: All the Subscription SKUs are all from Stage Candlepin, not Production Candlepin. </p>
+    <hr>
+    {{ wtf.quick_form(search_ph_product_line_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block search_ph_product_name_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; Please select the Product Hierarchy: Product Name, and click 'Search' button, then the 'SKU' column is just the
+        corresponding Subscription SKUs.</p>
+    <p>&nbsp;&nbsp; <font color="#00CC00">NOTE</font>: All the Subscription SKUs are all from Stage Candlepin, not Production Candlepin. </p>
+    <hr>
+    {{ wtf.quick_form(search_ph_product_name_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block search_sku_name_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; Fill in the SKU Name, you can input 1 or more SKU Name separated by comma, and click 'Search' button, then the 'SKU' column is just the
+        corresponding Subscription SKUs.</p>
+    <p>&nbsp;&nbsp; <font color="#00CC00">NOTE</font>: All the Subscription SKUs are all from Stage Candlepin, not Production Candlepin. </p>
+    <hr>
+    {{ wtf.quick_form(search_sku_name_form, form_type="horizontal", horizontal_columns=('lg', 2, 9)) }}
+</div>
+{% endblock %}
+
+{% block advanced_search_content %}
+<div class="container" style="width: 90%">
+    <p>&nbsp;&nbsp; <strong>Search by SKU Attributes:</strong></p>
+    <div class="container" style="width: 78%">
+        {{ wtf.quick_form(search_attribute_form, form_type="inline") }}
+    </div>
+    <hr>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp; <strong>How to choose a suitable search method for a specific attribute:</strong>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SKU -- contains/does not contains, equals/does not equals.</strong> Such as use contains MCT to select all MCT skus; use equals MCT2844 to select MCT2844.
+    <br>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eng Productid(s)/Arch -- contains/does not contains, equals/does not equals. You can input several values and split by ",", such as 150,183.
+    <br>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Virt Limit/Socket(s)/VCPU/Multiplier/Cores/RAM/Instance Based Virt Multiplier -- equals/does not equals, greater than/less than. Also contains/does not contains supported for none exactly match search.
+    <br>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Unlimited Product/Management Enabled/Virt-only/JON Management/Cloud Access Enabled/Multi Entitlement/Host Limited  -- is true/is not true.
+    <br>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Others -- contains/does not contains, is empty or null/is not empty or null if you want to search n/a or null.
+    <br>
+    <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <font color="#FF0000">NOTE</font>: If you find any issue of this feature, please help to record the data you used and put it in <a href="https://engineering.redhat.com/trac/content-tests/ticket/332">ticket</a>. Thank you!
+    </p>
+
+
+</div>
+{% endblock %}
+
+{% block doc_content %}
+<div class="container" style="width: 90%">
+    <div style="margin-left:20px;margin-top:20px;">
+    <p>1. Create Accounts</p>
+        <p>&nbsp;&nbsp;You can create your account in Stage Candlepin (subscription.rhn.stage.redhat.com) on this tab.
+            It's optional to entitle the account with Subscription SKUs and Quantity which can be added after account
+            creation on <a href={{ host }}#entitle>Entitle the account</a> tab. You can test your account via the
+            <a href="http://access.stage.redhat.com">Stage Customer Portal</a>.</p>
+        <p>&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: You can check your account before creation via <a href={{ host }}#view>View Accounts</a> tab.</p>
+    <p>2. Add Subscription Pools</p>
+        <p>&nbsp;&nbsp;You can populate your account on this tab by adding pools of subscriptions. These pools will appear
+            in the list of all available subscriptions to systems that have registered to this account.</p>
+        <p>&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: You can check your account before creation via <a href={{ host }}#view>View Accounts</a> tab.</p>
+    <p>3. Create Accounts from CSV</p>
+        <p>&nbsp;&nbsp;You can create and entitle your accounts from the uploaded csv file on this tab. </p>
+    <p>4. Search Subscription SKUs</p>
+        <p>&nbsp;&nbsp; Search by Product: Select the product name, and click 'Search' button, then the 'SKU' column is just the
+                corresponding Subscription SKUs.</p>
+        <p>&nbsp;&nbsp; Search by SKU Name: Fill in the SKU Name, you can input 1 or more SKU Name separated by comma, and click 'Search' button, then the 'SKU' column is just the
+        corresponding Subscription SKUs.</p>
+        <p>
+            <p>&nbsp;&nbsp;Advanced Search:</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;Search by SKU Attributes: Select the SKU attribute, then select the search method that you want to use, after that fill in the attribute value, you need to input at least 1 SKU attribute and the largest number is 5 attributes, and click 'Search' button, then the 'SKU' column is just the
+        corresponding Subscription SKUs.</p>
+            <p>&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: All the Subscription SKUs are all from Stage Candlepin, not Production Candlepin. </p>
+        </p>
+    <p>5. Manage Accounts</p>
+        <p>&nbsp;&nbsp;View Accounts: You can view your account in CSV format on this tab, please input the username and password. </p>
+        <p>&nbsp;&nbsp;Export Accounts: You can export your accounts on this tab.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00CC00">NOTE</font>: The supported browsers include Firefox(20+), Chrome, IE(10+), Opera(15+).</p>
+        <p>&nbsp;&nbsp;Refresh Accounts: You can refresh the Subscriptions of your account on this tab.</p>
+    <p><b>6. Known Issues</b></p>
+        <p>&nbsp;&nbsp;&nbsp;i). If failed to 'Accept Terms and Conditions' when you register with the newly created account(s), you can accept the terms again via the <a href={{ host }}#refresh>Refresh Subscription Pools</a> Tab.</p>
+        <p>&nbsp;&nbsp;ii).All products with Unlimited Product of 'True' will create unlimited quantity subscriptions. For entitlement purposes the subscription and pool quantity for those products is unlimited.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block issues_content %}
+<div class="container" style="width: 90%">
+    <!--div style="width:500px;height:200px;margin-left:300px;margin-top:150px;"-->
+    <div style="margin-left:20px;margin-top:20px;">
+        <p> Please open a ticket for us if you find any bug or have any enhancement requirement for this tool, thanks</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">Open a ticket</a> for a defect</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+enhancement&cc=entitlement-qe@redhat.com" target="_blank">Open a ticket</a> for an enhancement</p>
+        <!--&nbsp;&nbsp;&nbsp;&nbsp;<li><a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com" target="_blank">Open a ticket</a> for a defect</li>
+        &nbsp;&nbsp;&nbsp;&nbsp;<li><a href="https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+enhancement&cc=entitlement-qe@redhat.com" target="_blank">Open a ticket</a> for an enhancement</li-->
+    </div>
+</div>
+{% endblock %}
+
+
+

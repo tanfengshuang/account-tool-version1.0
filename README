@@ -1,0 +1,72 @@
+##################
+#  Account tool  #
+##################
+
+=================
+|  Installation |
+=================
+Install virtualenv
+# easy_install virtualenv
+# virtualenv venv
+# . venv/bin/activate
+Reference: http://flask.pocoo.org/docs/0.10/installation/
+
+Use virtualenv to install Flask related environment:
+# pip install flask
+# pip install flask-script
+# pip install argparse
+# pip install flask-bootstrap
+# pip install flask-moment
+# pip install peewee PyMySQL
+# pip install flask-wtf
+# pip install requests
+# pip install simplejson
+# pip install iniparse
+
+Install the rhsm/M2Crypto/rpm environment:
+# cp -r /usr/lib64/python2.6/site-packages/rhsm ./venv/lib/python2.6/site-packages/
+# cp -r /usr/lib64/python2.6/site-packages/M2Crypto ./venv/lib/python2.6/site-packages/
+# cp -r /usr/lib64/python2.6/site-packages/rpm ./venv/lib/python2.6/site-packages/
+
+
+# python index.py
+Traceback (most recent call last):
+  File "index.py", line 5, in <module>
+    from flask import Flask, render_template, request
+ImportError: No module named flask
+
+
+===========
+|  Setup  |
+===========
+1. Set hostname in file environments.py according to the machine's ip/hostname, for example:
+hostname = "account-manager-stage.app.eng.rdu2.redhat.com"
+
+2. Set host in file database.py according to the machine's ip/hostname, for example:
+host='account-manager-stage.app.eng.rdu2.redhat.com'
+
+3. Run the index.py with root user:
+# python index.py
+
+Then open the url in browser: http://account-manager-stage.app.eng.rdu2.redhat.com
+
+
+===========
+|  Usage  |
+===========
+Please refer to http://account-manager-stage.app.eng.rdu2.redhat.com#doc
+
+
+=========
+|  Log  |
+=========
+One log file will be generated everyday under this folder 'log' which is in the same folder as index.py.
+When create accounts from CSV file, the uploaded csv files will be also saved to csv folder under this 'log' folder.
+
+
+=====================
+|  Report an issue  |
+=====================
+Please open a ticket via the following url if you find any bug of this tool, thanks!
+https://engineering.redhat.com/trac/content-tests/newticket?component=Stage+Account+Management+Tool&milestone=Account+Tool&type=account+tool+defect&cc=entitlement-qe@redhat.com
+

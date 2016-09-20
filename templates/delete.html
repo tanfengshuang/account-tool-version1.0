@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Refresh {% endblock %}
+
+{% block content %}
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="page-header">
+        {% if result == 0 %}
+            <h5>Succeed to delete pool: {{ pool }}.</h5>
+        {% else %}
+            <h5><font color="red">Failed to delete pool {{ pool }}.</font></h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

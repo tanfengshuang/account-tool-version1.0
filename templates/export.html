@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US-x-Hixie">
+<head>
+    <title>Export Accounts</title>
+    <style>
+        body { padding: 0 !important; margin: 0 auto 300px; width: 100%; }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen, print">
+    <link href="../static/css/rcue.css" rel="stylesheet" media="screen, print">
+    <script type="text/javascript" async="async" src="../static/js/Blob.js"></script>
+    <script type="text/javascript" async="async" src="../static/js/canvas-toBlob.js"></script>
+    <script type="text/javascript" async="" src="../static/js/FileSaver.js"></script>
+    <script type="text/javascript" async="" src="../static/js/demo.js"></script>
+</head>
+<body>
+    <div class="header rcue">
+        <div class="navbar utility">
+            <div class="navbar-inner">
+                <ul class="nav">
+                    <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="text-demo">
+            <h5>Exported Account Info:</h5>
+            {% if quantity_mark == True %}
+                <h6><font color="#00CC00"><b>NOTE:</b></font></h6>
+                <h6>&nbsp;&nbsp;All products with Unlimited Product of 'True' will create unlimited quantity subscriptions.
+                    For entitlement purposes the subscription and pool quantity for those products is unlimited.</h6>
+                <h6>&nbsp;&nbsp;For SKU(s) {{ quantity_unlimited }} return 10000 instead of -1(unlimited) here as this tool
+                    cannot handle quantity -1 in <a href={{ host }}#create>Create</a> Tab. </h6>
+            {% endif %}
+            <textarea class="input" id="text" placeholder="Exported Info..." rows="20" style="width:80%">{{ info }}</textarea>
+            <form id="text-options" class="form-horizontal">
+                <label>Filename:<input style="text-align:right;" type="text" class="filename" id="text-filename" placeholder="export"/>.csv</label>
+                <input type="submit" value="Save"/>
+            </form>
+
+            <div style="width:100%;height:0px;position:absolute; right:0; bottom:0;">
+                <canvas id="canvas"/>
+                <div id="canvas-options"></div>
+                <div id="canvas-clear"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

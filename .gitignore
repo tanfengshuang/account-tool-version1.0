@@ -1,0 +1,11 @@
+*.pyc
+*.crt
+*.key
+*.pem
+*.log
+*.json
+*.idea
+*.properties
+*.props
+logs/
+.DS_Store

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen, print">
+<link href="../static/css/rcue.css" rel="stylesheet" media="screen, print">
+<script type="text/javascript" src="../static/js/jquery-1.8.3/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../static/js/report-function.js"></script>
+</head>
+<body>
+<style>
+body{ padding: 0 !important; margin: 0 auto 300px; width: 100%; }
+html, body {
+            background-color: #eaf4fd;
+            margin: 0px;
+            overflow:hidden;
+            }
+table {
+        border-collapse:collapse;
+        border:1px solid #666666;
+      }
+th {
+    height:30px;
+    width:70px;
+    BORDER-BOTTOM: #666666 1px solid;
+    TEXT-ALIGN: center;
+    BORDER-LEFT: #666666 1px solid;
+    BACKGROUND-COLOR: #d2e0f1;
+    COLOR: black;
+    FONT-SIZE: 9pt;
+    VERTICAL-ALIGN: middle;
+    BORDER-TOP: #666666 1px solid;
+    FONT-WEIGHT: bold;
+    BORDER-RIGHT: #666666 1px solid;
+    }
+td {
+    height:20px;
+    width:70px;
+    BORDER-BOTTOM: #666666 1px solid;
+    TEXT-ALIGN: center;
+    BORDER-LEFT: #666666 1px solid;
+    BACKGROUND-COLOR: #eaf4fd;
+    COLOR: black;
+    FONT-SIZE: 9pt;
+    VERTICAL-ALIGN: middle;
+    BORDER-TOP: #666666 1px solid;
+    FONT-WEIGHT: normal;
+    BORDER-RIGHT: #666666 1px solid;
+    }
+.unitDiv {
+          text-align:right;
+          COLOR: black;
+          FONT-SIZE: 9pt;
+          height:20px;
+          width:400px;
+        }
+</style>
+<table id="reportTable" width="1900" freezeRowNum="4" freezeColumnNum="1" class="report" align="center">
+    <tbody>
+        <tr>
+            <th colSpan="30" class="header rcue navbar utility nav" style="BACKGROUND-COLOR:#333"> <!--class="navbar utility" class="navbar-inner" ul class="nav"-->
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </th>
+        </tr>
+        <tr>
+            <th colSpan="30" style="text-align:left;"> <span style="font-size:20px;">Search results for <span style="font-style:italic;">{{ data }}</span></span>  (<font color="#00CC00">NOTE</font>: These datas are all from Stage Candlepin, not Production Candlepin.) </th>
+        </tr>
+        {% if sku_failed_matrix != "" %}
+        <tr>
+            <th style="width:300px;text-align:left" rowSpan="1" colSpan="30"> <span style="font-size:15px;color:red">ERROR</span>: The SKU(s) {{ sku_failed_matrix }} was/were not found among the SKU test request database. The SKU(s) may still be valid, but is/are not known to this tool at this time.</th>
+        </tr>
+        {% endif %}
+        {% if  sku_matrix != [] %}
+        <tr>
+            <th style="width:300px" rowSpan="2" colSpan="1"> SKU </th>
+            <th colSpan="26"> SKU Attributes  </th>
+            <th colSpan="2"> Eng Attributes  </th>
+            <th colSpan="1"> Stage Accounts  </th>
+        </tr>
+        <tr>
+            <th align="center"> Product Hierarchy: Product Category </th>
+            <th align="center"> Product Hierarchy: Product Line </th>
+            <th align="center"> Product Hierarchy: Product Name </th>
+            <th align="center"> Product Name </th>
+            <th align="center"> Virt Limit </th>
+            <th align="center"> Socket(s) </th>
+            <th align="center"> VCPU </th>
+            <th align="center"> Multiplier </th>
+            <th align="center"> Unlimited Product </th>
+            <th align="center"> Required Consumer Type </th>
+            <th align="center"> Product Family </th>
+            <th align="center"> Management Enabled </th>
+            <th align="center"> Variant </th>
+            <th align="center"> Support Level </th>
+            <th align="center"> Support Type </th>
+            <th align="center"> Enabled Consumer Types </th>
+            <th align="center"> Virt-only </th>
+            <th align="center"> Cores </th>
+            <th align="center"> JON Management </th>
+            <th align="center"> RAM </th>
+            <th align="center"> Instance Based Virt Multiplier </th>
+            <th align="center"> Cloud Access Enabled </th>
+            <th align="center"> Stacking ID </th>
+            <th align="center"> Multi Entitlement </th>
+            <th align="center"> Host Limited </th>
+            <th align="center"> Derived SKU </th>
+            <th align="center"> Eng Productid(s) </th>
+            <th align="center"> Arch </th>
+            <th align="center"> Username </th>
+        </tr>
+            {% for tr in sku_matrix %}
+            <tr>
+                <td style="width:110px;text-align:left;"> {{ tr['SKU'] }} </td>
+                <td> {{ tr['Product Hierarchy: Product Category'] }} </td>
+                <td> {{ tr['Product Hierarchy: Product Line'] }} </td>
+                <td> {{ tr['Product Hierarchy: Product Name'] }} </td>
+                <td> {{ tr['Product Name'] }} </td>
+                <td> {{ tr['Virt Limit'] }} </td>
+                <td> {{ tr['Socket(s)'] }} </td>
+                <td> {{ tr['VCPU'] }} </td>
+                <td> {{ tr['Multiplier'] }} </td>
+                <td> {{ tr['Unlimited Product'] }} </td>
+                <td> {{ tr['Required Consumer Type'] }} </td>
+                <td> {{ tr['Product Family'] }} </td>
+                <td> {{ tr['Management Enabled'] }} </td>
+                <td> {{ tr['Variant'] }} </td>
+                <td> {{ tr['Support Level'] }} </td>
+                <td> {{ tr['Support Type'] }} </td>
+                <td> {{ tr['Enabled Consumer Types'] }} </td>
+                <td> {{ tr['Virt-only'] }} </td>
+                <td> {{ tr['Cores'] }} </td>
+                <td> {{ tr['JON Management'] }} </td>
+                <td> {{ tr['RAM'] }} </td>
+                <td> {{ tr['Instance Based Virt Multiplier'] }} </td>
+                <td> {{ tr['Cloud Access Enabled'] }} </td>
+                <td> {{ tr['Stacking ID'] }} </td>
+                <td> {{ tr['Multi Entitlement'] }} </td>
+                <td> {{ tr['Host Limited'] }} </td>
+                <td> {{ tr['Derived SKU'] }} </td>
+                <td> {{ tr['Eng Productid(s)'] }} </td>
+                <td> {{ tr['Arch'] }} </td>
+                <td> {{ tr['Username'] }} </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

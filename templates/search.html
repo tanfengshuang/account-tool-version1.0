@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Search</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" media="screen, print">
+<link href="../static/css/rcue.css" rel="stylesheet" media="screen, print">
+<link href="../static/css/jquery.dataTables.min.css" rel="stylesheet" media="screen, print">
+<script type="text/javascript" src="../static/js/jquery-1.12.0/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="../static/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" async="" src="../static/js/FileSaver.js"></script>
+<script type="text/javascript" async="" src="../static/js/demo.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#reportTable').DataTable({
+            "scrollY": "600px",
+            "scrollX": true,
+            "paging": false,
+        } );
+
+        $('input.toggle-vis').on('click', function(e){
+            //e.preventDefault();
+            if ($(this).attr('id') == 0)
+            {
+
+                $isChecked = $(this).attr("checked");
+                if($isChecked == "checked")
+                {
+                    $checked = false;
+                    $(this).attr("checked", false);
+                }
+                else
+                {
+                    $checked = true
+                    $(this).attr("checked", "checked");
+                }
+
+                $("input:checkbox[name='checkbox1']").each(function(index,element){
+                    element.checked = $checked;
+                });
+
+                var i=1, len=30;
+                for(;len>0;len--,i++){
+                    var column = table.column(i);
+                    column.visible($checked);
+                }
+            }
+            else
+            {
+                // Get the column API object
+                var column = table.column($(this).attr('id'));
+
+                // Toggle the visibility
+                column.visible(!column.visible());
+            }
+        });
+    });
+
+    window.onload = function(){
+        var i=0, len=30;
+        for(;len>0;len--,i++){
+            //alert(i);
+            var chk = document.getElementById(String(i));
+            chk.checked = true;
+        }
+    }
+</script>
+</head>
+<body>
+<style>
+th {
+    height:30px;
+    width:70px;
+    BORDER-BOTTOM: #666666 1px solid;
+    TEXT-ALIGN: center;
+    BORDER-LEFT: #666666 1px solid;
+    BACKGROUND-COLOR: #d2e0f1;
+    COLOR: black;
+    FONT-SIZE: 9pt;
+    VERTICAL-ALIGN: middle;
+    BORDER-TOP: #666666 1px solid;
+    FONT-WEIGHT: bold;
+    BORDER-RIGHT: #666666 1px solid;
+    }
+td {
+    height:20px;
+    width:70px;
+    BORDER-BOTTOM: #666666 1px solid;
+    TEXT-ALIGN: center;
+    BORDER-LEFT: #666666 1px solid;
+    BACKGROUND-COLOR: #eaf4fd;
+    COLOR: black;
+    FONT-SIZE: 9pt;
+    VERTICAL-ALIGN: middle;
+    BORDER-TOP: #666666 1px solid;
+    FONT-WEIGHT: normal;
+    BORDER-RIGHT: #666666 1px solid;
+    }
+.unitDiv {
+    text-align:right;
+    COLOR: black;
+    FONT-SIZE: 9pt;
+    height:20px;
+    width:400px;
+    }
+div.dataTables_wrapper {
+    width: 100%;
+    height: 400px;
+    margin: 0 auto;
+}
+</style>
+<div class="header rcue">
+    <div class="navbar utility">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <a class="brand" href="/"><img src="static/img/redhat-lg.png" alt="Red Hat&reg; Account Tool" /></a>
+            </ul>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="page-header">
+        <p><span style="font-size:20px;">Search results for <span style="font-style:italic;">{{ data }}</span></span>  (<font color="#00CC00">NOTE</font>: These datas are all from Stage Candlepin, not Production Candlepin.)</p>
+        {% if sku_failed_matrix != "" %}
+            <hr>
+            <p><span style="font-size:15px;color:red">ERROR</span>: The SKU(s) {{ sku_failed_matrix }} was/were not found among the SKU test request database. The SKU(s) may still be valid, but is/are not known to this tool at this time.</p>
+            <p><span style="font-size:15px;color:red">This part should be enhanced later for new function - search attribute...</span></p>
+        {% endif %}
+    </div>
+    <div>
+        <b>Toggle column:</b>
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="0" checked/>Check/Uncheck ALL</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="1" checked/>Product Hierarchy: Product Category</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="2" checked/>Product Hierarchy: Product Line</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="3" checked/>Product Hierarchy: Product Name</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="4" checked/>Product Name</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="5" checked/>Virt Limit</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="6" checked/>Socket(s)</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="7" checked/>VCPU</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="8" checked/>Multiplier</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="9" checked/>Unlimited Product</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="10" checked/>Required Consumer Type</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="11" checked/>Product Family</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="12" checked/>Management Enabled</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="13" checked/>Variant</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="14" checked/>Support Level</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="15" checked/>Support Type</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="16" checked/>Enabled Consumer Types</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="17" checked/>Virt-only</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="18" checked/>Cores</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="19" checked/>JON Management</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="20" checked/>RAM</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="21" checked/>Instance Based Virt Multiplier</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="22" checked/>Cloud Access Enabled</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="23" checked/>Stacking ID</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="24" checked/>Multi Entitlement</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="25" checked/>Host Limited</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="26" checked/>Derived SKU</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="27" checked/>Arch</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="28" checked/>Eng Productid(s)</td>
+                    <td><input type="checkbox" class="toggle-vis" name="checkbox1" id="29" checked/>Username</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+    <div>
+        <div style="text-align:left">
+            <div id="text-demo" >
+                <div style="display:none">
+                    <textarea class="input" id="text" placeholder="Exported Info..." rows="20" style="width:80%">{{ sku_matrix_csv }}</textarea>
+                </div>
+                <div style="text-align:left">
+                    <form id="text-options" class="form-horizontal">
+                        <label>Name:&nbsp&nbsp<input style="width:5%" size="0px" type="text" class="filename" id="text-filename" placeholder="sku"/>.csv</label>
+                        <input type="submit" value="Download Result"/>
+                    </form>
+                </div>
+                <div style="width:100%;height:0px;position:absolute; right:0; bottom:0;">
+                    <canvas id="canvas"/>
+                    <div id="canvas-options"></div>
+                    <div id="canvas-clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if  sku_matrix != [] %}
+    <table id="reportTable" class="display nowrap" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th height="33" rowspan="2">SKU Name<br/>(id)</th>
+                <th colspan="27">SKU Attributes</th>
+                <th colspan="1">Eng Attributes</th>
+                <th>Stage_Accounts</th>
+            </tr>
+            <tr>
+                <th align="center"> Product Hierarchy: Product Category<br/>(ph_category) </th>
+                <th align="center"> Product Hierarchy: Product Line<br/>(ph_product_line) </th>
+                <th align="center"> Product Hierarchy: Product Name<br/>(ph_product_name) </th>
+                <th align="center"> Product Name<br/>(name) </th>
+                <th align="center"> Virt Limit<br/>(virt_limit) </th>
+                <th align="center"> Socket(s)<br/>(sockets) </th>
+                <th align="center"> VCPU<br/>(vcpu) </th>
+                <th align="center"> Multiplier<br/>(multiplier )</th>
+                <th align="center"> Unlimited Product<br/>(unlimited_product) </th>
+                <th align="center"> Required Consumer Type<br/>(requires_consumer_type) </th>
+                <th align="center"> Product Family<br/>(product_family) </th>
+                <th align="center"> Management Enabled<br/>(management_enabled) </th>
+                <th align="center"> Variant<br/>(variant) </th>
+                <th align="center"> Support Level<br/>(support_level) </th>
+                <th align="center"> Support Type<br/>(support_type) </th>
+                <th align="center"> Enabled Consumer Types<br/>(enabled_consumer_types) </th>
+                <th align="center"> Virt-only<br/>(virt_only) </th>
+                <th align="center"> Cores<br/>(cores) </th>
+                <th align="center"> JON Management<br/>(jon_management) </th>
+                <th align="center"> RAM<br/>(ram) </th>
+                <th align="center"> Instance Based Virt Multiplier<br/>(instance_multiplier) </th>
+                <th align="center"> Cloud Access Enabled<br/>(cloud_access_enabled) </th>
+                <th align="center"> Stacking ID<br/>(stacking_id) </th>
+                <th align="center"> Multi Entitlement<br/>(multi-entitlement) </th>
+                <th align="center"> Host Limited<br/>(host_limited) </th>
+                <th align="center"> Derived SKU<br/>(derived_sku) </th>
+                <th align="center"> Arch<br/>(arch) </th>
+                <th align="center"> Eng Productid(s)<br/>(eng_product_ids) </th>
+                <th align="center"> Username<br/>(username) </th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for tr in sku_matrix %}
+                    <tr>
+                        <td style="width:110px;text-align:left;"> {{ tr['SKU'] }} </td>
+                        <td> {{ tr['Product Hierarchy: Product Category'] }} </td>
+                        <td> {{ tr['Product Hierarchy: Product Line'] }} </td>
+                        <td> {{ tr['Product Hierarchy: Product Name'] }} </td>
+                        <td> {{ tr['Product Name'] }} </td>
+                        <td> {{ tr['Virt Limit'] }} </td>
+                        <td> {{ tr['Socket(s)'] }} </td>
+                        <td> {{ tr['VCPU'] }} </td>
+                        <td> {{ tr['Multiplier'] }} </td>
+                        <td> {{ tr['Unlimited Product'] }} </td>
+                        <td> {{ tr['Required Consumer Type'] }} </td>
+                        <td> {{ tr['Product Family'] }} </td>
+                        <td> {{ tr['Management Enabled'] }} </td>
+                        <td> {{ tr['Variant'] }} </td>
+                        <td> {{ tr['Support Level'] }} </td>
+                        <td> {{ tr['Support Type'] }} </td>
+                        <td> {{ tr['Enabled Consumer Types'] }} </td>
+                        <td> {{ tr['Virt-only'] }} </td>
+                        <td> {{ tr['Cores'] }} </td>
+                        <td> {{ tr['JON Management'] }} </td>
+                        <td> {{ tr['RAM'] }} </td>
+                        <td> {{ tr['Instance Based Virt Multiplier'] }} </td>
+                        <td> {{ tr['Cloud Access Enabled'] }} </td>
+                        <td> {{ tr['Stacking ID'] }} </td>
+                        <td> {{ tr['Multi Entitlement'] }} </td>
+                        <td> {{ tr['Host Limited'] }} </td>
+                        <td> {{ tr['Derived SKU'] }} </td>
+                        <td> {{ tr['Arch'] }} </td>
+                        <td> {{ tr['Eng Productid(s)'] }} </td>
+                        <td> {{ tr['Username'] }} </td>
+                    </tr>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+</body>
+</html>
